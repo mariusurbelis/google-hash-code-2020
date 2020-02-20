@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -27,6 +28,11 @@ string outputFileName [] = {"results/a.txt", "results/b.txt", "results/c.txt", "
 
 // Declaring the variables
 long bookTypes, librariesCount, days;
+
+bool compareByscore(const book &a, const book &b)
+{
+    return a.score < b.score;
+}
 
 int main () {
     // Declaring the ifstream
@@ -63,6 +69,15 @@ int main () {
     }
 
     long libraryIterator = 0;
+
+    // cout << endl << "Score " << libraries[10].books.back().score << endl;
+
+    for (int i = 0; i < librariesCount; i++) {
+        sort(libraries[i].books.begin(), libraries[i].books.end(), compareByscore);
+    }
+
+    // cout << endl << "Score " << libraries[10].books.back().score << endl;
+
 
     ofstream results;
     results.open(outputFileName[fileID]);
@@ -119,16 +134,14 @@ int main () {
 
     for (long i = 0; i < howManyScanned; i++) {
         for (long libs = 0; libs < librariesCount; libs++) {
-            if (libraries[libs].signedUpNumber == i) {
+            if (libraries[libs].signedUpNumber == i && (long)libraries[libs].scannedBooks.size() != 0) {
                 results << libs << " " << libraries[libs].scannedBooks.size() << endl;
 
                 for (long b = 0; b < (long)libraries[libs].scannedBooks.size(); b++) {
                     results << libraries[libs].scannedBooks[b].id << " ";
                 }
                 
-                if ((long)libraries[libs].scannedBooks.size() != 0) {
-                    results << endl;
-                }
+                results << endl;
 
                 break;
             }

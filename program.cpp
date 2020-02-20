@@ -17,6 +17,7 @@ struct library {
     int canBeScanned;
     int bookCount;
     vector<book> books;
+    vector<book> scannedBooks;
 };
 
 vector<book> scannedBooks;
@@ -71,7 +72,7 @@ int main () {
                         book scanningBook = libraries[s].books.back();
                         libraries[s].books.pop_back();
                         cout << "Day " << i+1 << ". Scanned book id:" << scanningBook.id << " score:" << scanningBook.score << endl; 
-                        scannedBooks.push_back(scanningBook);
+                        libraries[s].scannedBooks.push_back(scanningBook);
                     }
                 }
             }
@@ -92,10 +93,19 @@ int main () {
         cout << "Scanned ID: " << b.id << ", score: " << b.score << endl;
     }
 
-    results << "Hi" << endl;
 
+    // Outputting the results to a result file
+    int howManyScanned = 0;
 
-    // Closing the file stream
+    for (int i = 0; i < librariesCount; i++) {
+        if (libraries[i].signedUp) {
+            howManyScanned ++;
+        }
+    }
+
+    results << howManyScanned << endl;
+
+    // Closing the file streams
     file.close();
     results.close();
 

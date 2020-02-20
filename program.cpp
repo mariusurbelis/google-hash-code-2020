@@ -21,7 +21,7 @@ struct library {
     vector<book> scannedBooks;
 };
 
-long fileID = 5;
+long fileID = 3;
 string inputFileName [] = {"input/a_example.txt", "input/b_read_on.txt", "input/c_incunabula.txt", "input/d_tough_choices.txt", "input/e_so_many_books.txt", "input/f_libraries_of_the_world.txt"};
 string outputFileName [] = {"results/a.txt", "results/b.txt", "results/c.txt", "results/d.txt", "results/e.txt", "results/f.txt"};
 
@@ -42,9 +42,12 @@ int main () {
     long scores [bookTypes];
     library libraries [librariesCount];
 
+    bool bookScanned [bookTypes];
+
     // Reading in the scores
     for (long i = 0; i < bookTypes; i++) {
         file >> scores[i];
+        bookScanned[i] = false;
     }
 
     // Reading in the library book counts
@@ -73,7 +76,17 @@ int main () {
                 for (long c = 0; c < libraries[s].canBeScanned; c++) {
                     if (libraries[s].books.size() > 0) {
                         book scanningBook = libraries[s].books.back();
+
+                        if (bookScanned[scanningBook.id]) {
+                            c--;
+                            libraries[s].books.pop_back();
+                            continue;
+                        }
+
                         libraries[s].books.pop_back();
+
+                        bookScanned[scanningBook.id] = true;
+
                         // cout << "Day " << i+1 << " lib:" << s << ". Scanned book id:" << scanningBook.id << " score:" << scanningBook.score << endl; 
                         libraries[s].scannedBooks.push_back(scanningBook);
                     }
@@ -112,8 +125,10 @@ int main () {
                 for (long b = 0; b < (long)libraries[libs].scannedBooks.size(); b++) {
                     results << libraries[libs].scannedBooks[b].id << " ";
                 }
-
-                results << endl;
+                
+                if ((long)libraries[libs].scannedBooks.size() != 0) {
+                    results << endl;
+                }
 
                 break;
             }

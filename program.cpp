@@ -13,6 +13,7 @@ struct book {
 
 // Structure for a library
 struct library {
+    int id;
     bool signedUp = false;
     long signedUpNumber;
     long signupTime;
@@ -31,7 +32,7 @@ long bookTypes, librariesCount, days;
 
 bool compareByscore(const book &a, const book &b)
 {
-    return a.score < b.score;
+    return a.score > b.score;
 }
 
 int main () {

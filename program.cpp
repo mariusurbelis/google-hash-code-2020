@@ -4,11 +4,13 @@
 
 using namespace std;
 
+// Structure for a book
 struct book {
     int id;
     int score;
 };
 
+// Structure for a library
 struct library {
     int signupTime;
     int canBeScanned;
@@ -26,6 +28,14 @@ int main () {
 
     // Reading in the first line. B, L and D
     file >> bookTypes >> libraries >> days;
+
+    // Declaring the score array
+    int scores [bookTypes];
+
+    // Reading in the scores
+    for (int i = 0; i < bookTypes; i++) {
+        file >> scores[i];
+    }
 
     // Printing out the variables
     cout << "B: " << bookTypes << " L: " << libraries << " D: " << days << endl;

@@ -23,7 +23,7 @@ struct library {
     vector<book> scannedBooks;
 };
 
-long fileID = 3;
+long fileID = 2;
 string inputFileName [] = {"input/a_example.txt", "input/b_read_on.txt", "input/c_incunabula.txt", "input/d_tough_choices.txt", "input/e_so_many_books.txt", "input/f_libraries_of_the_world.txt"};
 string outputFileName [] = {"results/a.txt", "results/b.txt", "results/c.txt", "results/d.txt", "results/e.txt", "results/f.txt"};
 
@@ -118,6 +118,9 @@ int main () {
             libraries[libraryIterator].signedUpNumber = libraryIterator;
             libraryIterator++;
         }
+
+        if (i % 10000 == 0)
+            cout << "Day: " << i << "/" << days << endl;
     }
 
     cout << "Simulation end" << endl << endl;

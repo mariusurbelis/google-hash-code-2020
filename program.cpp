@@ -13,6 +13,7 @@ struct book {
 // Structure for a library
 struct library {
     bool signedUp = false;
+    int signedUpNumber;
     int signupTime;
     int canBeScanned;
     int bookCount;
@@ -62,6 +63,7 @@ int main () {
     ofstream results;
     results.open("./results/a.txt");
 
+    cout << "Simulation start: " << endl;
     // The main days loop
     for (int i = 0; i < days; i++) {
         // Scan the books
@@ -83,11 +85,12 @@ int main () {
             libraries[libraryIterator].signupTime --;
         } else {
             libraries[libraryIterator].signedUp = true;
+            libraries[libraryIterator].signedUpNumber = libraryIterator;
             libraryIterator++;
         }
     }
 
-    cout << endl << endl;
+    cout << "Simulation end" << endl << endl;
 
     for (book b : scannedBooks) {
         cout << "Scanned ID: " << b.id << ", score: " << b.score << endl;
@@ -104,6 +107,22 @@ int main () {
     }
 
     results << howManyScanned << endl;
+
+    for (int i = 0; i < howManyScanned; i++) {
+        for (int libs = 0; libs < librariesCount; libs++) {
+            if (libraries[libs].signedUpNumber == i) {
+                results << libs << " " << libraries[libs].scannedBooks.size() << endl;
+
+                for (int b = 0; b < libraries[libs].scannedBooks.size(); b++) {
+                    results << libraries[libs].scannedBooks[b].id << " ";
+                }
+
+                results << endl;
+
+                break;
+            }
+        }
+    }
 
     // Closing the file streams
     file.close();

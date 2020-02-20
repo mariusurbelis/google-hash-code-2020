@@ -1,7 +1,19 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 using namespace std;
+
+struct book {
+    int id;
+    int score;
+};
+
+struct library {
+    int signupTime;
+    int canBeScanned;
+    int bookCount;
+};
 
 // Declaring the variables
 int bookTypes, libraries, days;
